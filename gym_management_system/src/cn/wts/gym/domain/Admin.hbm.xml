@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-29 21:53:09 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="cn.wts.gym.domain.Admin" table="admin" catalog="gym">
+        <id name="admin_id" type="java.lang.Integer">
+            <column name="admin_id" />
+            <generator class="increment" />
+        </id>
+        <property name="username" type="string">
+            <column name="username" length="20" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="20" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

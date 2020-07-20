@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-29 21:53:09 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="cn.wts.gym.domain.Equip" table="equip" catalog="gym">
+        <id name="equip_id" type="java.lang.Integer">  
+           <generator class="identity"></generator>  
+        </id>
+        <property name="equip_no" type="java.lang.String" >  
+           <column name="equip_no" length="20" not-null="true"></column>
+        </property>  
+        <property name="equip_image" type="java.lang.String" >  
+           <column name="equip_image"></column>
+        </property>    
+        <property name="equip_name" type="java.lang.String" >  
+           <column name="equip_name" length="20" not-null="true"></column>
+        </property>  
+        <property name="equip_type" type="java.lang.String">  
+          <column name="equip_type" length="20" not-null="true"></column>
+        </property> 
+        <property name="equip_count" type="java.lang.Integer">  
+          <column name="equip_count" not-null="true"></column>
+        </property>
+        <property name="equip_company" type="java.lang.String">  
+          <column name="equip_company" not-null="true"></column>
+        </property>
+        <property name="equip_purchase">  
+          <column name="equip_purchase" not-null="true"></column>
+        </property>
+        <property name="equip_state" type="java.lang.String">  
+          <column name="equip_state" length="20" not-null="true"></column>
+        </property>
+    </class>
+</hibernate-mapping>

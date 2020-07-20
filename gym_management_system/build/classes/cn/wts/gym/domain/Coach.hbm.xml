@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-29 21:53:09 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="cn.wts.gym.domain.Coach" table="coach" catalog="gym">
+        <id name="coach_id" type="java.lang.Integer">  
+           <generator class="identity"></generator>  
+        </id>  
+        <property name="coach_no" type="java.lang.String" >  
+           <column name="coach_no" length="20" not-null="true"></column>
+        </property> 
+        <property name="coach_name" type="java.lang.String" >  
+           <column name="coach_name" length="20" not-null="true"></column>
+        </property>
+        <property name="coach_image" type="java.lang.String" >  
+           <column name="coach_image"></column>
+        </property>    
+        <property name="coach_gender" type="java.lang.String">  
+          <column name="coach_gender" length="20" not-null="true"></column>
+        </property> 
+        <property name="coach_grade" type="java.lang.String">  
+          <column name="coach_grade" length="20" not-null="true"></column>
+        </property>
+        <property name="coach_phone" type="java.lang.String">  
+          <column name="coach_phone" length="20" not-null="true"></column>
+        </property>
+        <property name="coach_email" type="java.lang.String">  
+          <column name="coach_email" length="20" not-null="true"></column>
+        </property>
+        <property name="coach_entry">  
+          <column name="coach_entry" not-null="true"></column>
+        </property>
+        <!-- 一对多双向关联映射 coach到course，单的一方配置 -->
+		<!-- inverse="true"代表外键放弃维护能力   ascade="delete"只对持久化对象有效果，对临时状态无效果-->
+        <set name="courses" table="course" inverse="true" cascade="all">
+        	<key column="coach_id"></key>
+        	<one-to-many class="cn.wts.gym.domain.Course"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+<!-- =================================== 配置数据源  ======================================== -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/gym?characterEncoding=utf-8"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value=""></property>
+		<!-- 指定连接数据库连接池的最大连接数 -->
+		<property name="maxPoolSize" value="40" />
+		<!-- 指定连接数据库连接池的最小连接数 -->
+		<property name="minPoolSize" value="1" />
+		<!-- 指定连接数据库连接池的初始化连接数 -->
+		<property name="initialPoolSize" value="1" />
+		<!-- 指定连接数据库连接池的连接的最大空闲时间 -->
+		<property name="maxIdleTime" value="20" />
+	</bean>
+	
+	<!-- 定义了Hibernate的SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>cn/wts/gym/domain/User.hbm.xml</value>
+				<value>cn/wts/gym/domain/Admin.hbm.xml</value>
+				<value>cn/wts/gym/domain/Card.hbm.xml</value>
+				<value>cn/wts/gym/domain/Coach.hbm.xml</value>
+				<value>cn/wts/gym/domain/Course.hbm.xml</value>
+				<value>cn/wts/gym/domain/Equip.hbm.xml</value>
+				<value>cn/wts/gym/domain/Orders.hbm.xml</value>
+				<value>cn/wts/gym/domain/News.hbm.xml</value>
+				<value>cn/wts/gym/domain/Reception.hbm.xml</value>
+			</list>
+		</property>
+		<!-- 推荐使用 -->
+<!-- 		<property name="mappingDirectoryLocations"> -->
+<!-- 			<list> -->
+<!-- 				<value>cn/wts/gym/domain</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.jdbc.fetch_size">50</prop>
+                <prop key="hibernate.jdbc.batch_size">50</prop>
+                <prop key="connection.autocommit">true</prop> <!-- 添加这个 -->
+			</props>
+		</property>
+	</bean>
+	<!-- HibernateTemplate类是简化Hibernate数据访问代码的辅助类，可以获取一个Session对象 -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<!--<property name="allowCreate"> <value>true</value> </property> -->
+	</bean>
+	
+<!-- ======================配置验证码Action scope="prototype"一定要写这一句===========================-->
+	<!--验证码action -->
+	<bean id="checkCodeAction" class="cn.wts.gym.web.adminAction.CheckCodeAction" scope="prototype">	</bean>
+	<!--登录action -->
+	<bean id="loginAction" class="cn.wts.gym.web.adminAction.LoginAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<!--注册action -->
+	<bean id="registerAction" class="cn.wts.gym.web.adminAction.RegisterAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<!--退出action -->
+	<bean id="exitAction" class="cn.wts.gym.web.adminAction.ExitAction" scope="prototype">
+		
+	</bean>
+			<!--==================== 后台管理员的所有action =========================-->
+	<bean id="adminUserAction" class="cn.wts.gym.web.adminAction.AdminUserAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="adminCardAction" class="cn.wts.gym.web.adminAction.AdminCardAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="adminCoachAction" class="cn.wts.gym.web.adminAction.AdminCoachAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="adminEquipAction" class="cn.wts.gym.web.adminAction.AdminEquipAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="adminCourseAction" class="cn.wts.gym.web.adminAction.AdminCourseAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="adminOrdersAction" class="cn.wts.gym.web.adminAction.AdminOrdersAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="adminNewsAction" class="cn.wts.gym.web.adminAction.AdminNewsAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="adminReceptionAction" class="cn.wts.gym.web.adminAction.AdminReceptionAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+				<!--==================== 用户的所有action =========================-->
+	<bean id="userCoachAction" class="cn.wts.gym.web.userAction.UserCoachAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="userEquipAction" class="cn.wts.gym.web.userAction.UserEquipAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="userCourseAction" class="cn.wts.gym.web.userAction.UserCourseAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="userOrdersAction" class="cn.wts.gym.web.userAction.UserOrdersAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="userAction" class="cn.wts.gym.web.userAction.UserAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="userNewsAction" class="cn.wts.gym.web.userAction.UserNewsAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="userCardAction" class="cn.wts.gym.web.userAction.UserCardAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+<!-- =============================== 配置service ==============================================-->
+	<!-- 管理员service -->
+	<bean id="adminService" class="cn.wts.gym.service.impl.AdminServiceImpl">
+		<property name="adminDao" ref="adminDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="cardDao" ref="cardDao"></property>
+		<property name="coachDao" ref="coachDao"></property>
+		<property name="equipDao" ref="equipDao"></property>
+		<property name="courseDao" ref="courseDao"></property>
+		<property name="ordersDao" ref="ordersDao"></property>
+		<property name="newsDao" ref="newsDao"></property>
+		<property name="receptionDao" ref="receptionDao"></property>
+	</bean>
+	<!-- 用户service -->
+	<bean id="userService" class="cn.wts.gym.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+		<property name="equipDao" ref="equipDao"></property>
+		<property name="courseDao" ref="courseDao"></property>
+		<property name="ordersDao" ref="ordersDao"></property>
+		<property name="coachDao" ref="coachDao"></property>
+		<property name="newsDao" ref="newsDao"></property>
+		<property name="cardDao" ref="cardDao"></property>
+	</bean>
+<!-- =============================== 配置DAO ==================================================-->
+	<bean id="adminDao" class="cn.wts.gym.dao.impl.AdminDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean> 
+	<bean id="userDao" class="cn.wts.gym.dao.impl.UserDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="cardDao" class="cn.wts.gym.dao.impl.CardDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>  
+	<bean id="coachDao" class="cn.wts.gym.dao.impl.CoachDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="equipDao" class="cn.wts.gym.dao.impl.EquipDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="courseDao" class="cn.wts.gym.dao.impl.CourseDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="ordersDao" class="cn.wts.gym.dao.impl.OrdersDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="newsDao" class="cn.wts.gym.dao.impl.NewsDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="receptionDao" class="cn.wts.gym.dao.impl.ReceptionDaoImpl">
+		<!-- 注入 sessionFactory 构造hiebernateTemplate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean> 
+	<!-- 开启注解事务-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

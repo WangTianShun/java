@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-29 21:53:09 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="cn.wts.gym.domain.Card" table="card" catalog="gym">
+        <id name="card_id" type="java.lang.Integer">  
+           <generator class="identity"></generator>  
+        </id>  
+        <property name="card_no" type="java.lang.String" >  
+           <column name="card_no" length="20" not-null="true"></column>
+        </property>  
+        <property name="card_grade" type="java.lang.String">  
+          <column name="card_grade" length="20" not-null="true"></column>
+        </property>
+        <property name="card_begin">  
+          <column name="card_begin" not-null="true"></column>
+        </property>
+        <property name="card_end">  
+          <column name="card_end" not-null="true"></column>
+        </property>
+        <property name="card_account">  
+          <column name="card_account" not-null="true"></column>
+        </property>
+        <!-- 一对一外键关联，唯一的多对一，实际上变成一对一关系 -->
+        <many-to-one name="user" class="cn.wts.gym.domain.User"
+        	column="user_id"  unique="true"/>
+    </class>
+</hibernate-mapping>

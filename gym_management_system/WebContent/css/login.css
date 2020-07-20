@@ -1,0 +1,78 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    width: 100%;
+    background: url("../img/login.jfif") no-repeat center;    
+    padding-top: 25px;
+}
+.main{
+    height: auto;
+    margin: auto;
+    margin-top: 5%; 
+}
+ .center{
+    width: 38%;
+    height: 480px;
+    padding: 2% 0% 0% 0%;
+    background-image: url(../img/center.png);
+    background-size: 170% 170%;
+    background-position: 49% 60%;
+    opacity: 1;/*透明度*/
+    margin: auto;
+    font-size:14px;
+    color: red;/*#cccccc;*/        /* 提示条颜色 */
+}
+input{
+    width: 40%;
+    height: 42px;
+    background-color: rgba(224, 227, 232, 0.11);
+    border-radius: 5px;
+    margin: auto;
+    opacity: 1;
+    outline-style:none;
+    border: 1px solid rgba(239, 239, 239, 0.15);
+    font-size: 20px;
+    color: black;/*#bdc0b8;*/
+    font-family: "微软雅黑";
+    padding-left:10px;
+    margin-top: 3%;
+}
+input:focus{
+    background-color: rgba(196, 199, 204, 0.40);
+    /*border: 1px solid #7FCAF1;*/
+    box-shadow: 0px 0px 5px rgba(241, 237, 239, 0.35);
+    opacity: 1;
+}
+select{
+ 	width: 22%; 
+    height: 42px;
+    background-color: rgba(224, 227, 232, 0.11);
+    border-radius: 5px;
+    margin: auto;
+    opacity: 1;
+    outline-style:none;/*属性指定outline的样式*/
+    border: 1px solid rgba(239, 239, 239, 0.15);
+    font-size: 20px;
+    color: black;/*#bdc0b8;*/
+    font-family: "微软雅黑";
+    padding-left:10px;
+    margin-top: 3%;
+}
+.Cone{
+    color: #adadad;
+    margin-left: 25%; 
+    margin-top: 3%;
+    height: 50px;
+    font-size:1.35em;
+}
+.submit{
+  margin:0 auto;
+  margin-left: 35%;
+}
+.error{
+	margin-left: 25%; 
+}
+

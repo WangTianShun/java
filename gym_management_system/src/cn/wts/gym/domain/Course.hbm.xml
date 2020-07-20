@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-29 21:53:09 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="cn.wts.gym.domain.Course" table="course" catalog="gym">
+        <id name="course_id" type="java.lang.Integer">  
+           <generator class="identity"></generator>  
+        </id>
+         <property name="course_no" type="java.lang.String" >  
+           <column name="course_no" length="20" not-null="true"></column>
+        </property>   
+        <property name="course_name" type="java.lang.String" >  
+           <column name="course_name" length="20" not-null="true"></column>
+        </property>  
+        <property name="course_type" type="java.lang.String">  
+          <column name="course_type" length="20" not-null="true"></column>
+        </property> 
+        <property name="course_cost" type="double">  
+          <column name="course_cost" not-null="true"></column>
+        </property>
+        <property name="course_time" type="java.lang.String">  
+          <column name="course_time" length="20" not-null="true"></column>
+        </property>
+        <property name="course_count" type="java.lang.Integer">  
+          <column name="course_count" not-null="true"></column>
+        </property>
+        <property name="course_info">  
+          <column name="course_info" not-null="true"></column>
+        </property>
+        <property name="course_image" type="java.lang.String">  
+          <column name="course_image"></column>
+        </property>
+        <!-- 一对多双向关联映射 多的一方配置 -->
+        <many-to-one name="coach" class="cn.wts.gym.domain.Coach"
+        	column="coach_id"  not-null="true" />
+        	
+        <!-- 一对多双向关联映射 course到orders，单的一方配置 -->
+		<!-- inverse="true"代表外键放弃维护能力   ascade="delete"只对持久化对象有效果，对临时状态无效果-->
+      	<set name="orders" table="orders" inverse="true" cascade="all">
+        	<key column="course_id"></key>
+        	<one-to-many class="cn.wts.gym.domain.Orders"/>
+        </set>
+    </class>
+</hibernate-mapping>

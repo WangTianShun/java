@@ -1,0 +1,66 @@
+.*{
+	margin: 0 auto;
+	padding: 0px;
+    box-sizing: border-box;
+}
+.fit_course{
+	margin-top: 20px;
+	text-align: center;
+	font-weight:bold;
+	font-size: 20px;
+}
+.fit_course_1{
+	text-align: center;
+	font-size: 15px;
+	color: gray;
+	margin-bottom: 10px;
+}
+.course_name{
+	text-align: center;
+	font-size: 15px;
+	font-weight:bold;
+}
+.fit_dongtai{
+	background-color: #f0f0f0;
+	height: 226px;	
+}
+.dongtai_title{
+	padding-top: 10px;
+	
+}
+.footer1{
+	background: #f0f0f0;
+	height: 150px;
+}
+.footer_context{
+	text-align: left;
+	font-size: 25px;
+	font-weight: bold;
+	padding-top: 15px;
+}
+.footer_context1{
+	text-align: left;
+	font-size: 15px;
+	color: gray;
+}
+
+.footer_text{
+	text-align: left;
+	font-size: 20px;
+	padding-top: 15px;
+}
+.footer_text1{
+	margin-top: 30px;
+	text-align: left;
+	font-size: 15px;
+	color: gray;
+	
+	
+}
+.footer2{
+	background: #dadada;
+	 height: 40px;
+     text-align: center;
+     line-height:40px ;
+     font-size: 10px;
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-29 21:53:09 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="cn.wts.gym.domain.Orders" table="orders" catalog="gym">
+        <id name="orders_id" type="java.lang.Integer">  
+           <generator class="identity"></generator>  
+        </id>   
+        <property name="orders_time" >  
+          <column name="orders_time" not-null="true"></column>
+        </property>
+        <property name="orders_money">  
+          <column name="orders_money" not-null="true"></column>
+        </property>
+        <property name="orders_state" type="java.lang.String">  
+          <column name="orders_state" length="20" not-null="true"></column>
+        </property>
+        <!-- 一对多双向关联映射orders到user 多的一方配置 -->
+        <many-to-one name="user" class="cn.wts.gym.domain.User"
+        	column="user_id"  not-null="true" />
+        	
+        <!-- 一对多双向关联映射orders到course 多的一方配置 -->
+        <many-to-one name="course" class="cn.wts.gym.domain.Course"
+        	column="course_id"  not-null="true" />
+    </class>
+</hibernate-mapping>

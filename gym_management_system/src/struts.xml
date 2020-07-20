@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<!-- 设置上传文件大小 -->
+	<constant name="struts.multipart.maxSize" value="209715200"></constant>
+	<!--允许动态调用方法，通配符+占位符组合，必须加上这行代码-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    <constant name="struts.devMode" value="false"></constant>
+
+	<package name="wts" extends="struts-default,json-default" >
+        <!--报错时 Method 方法 for action Action is not allowed 
+        	添加global-allowed-methods表示允许动态调用的方法-->
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        
+<!--:=================== 将action交给Spring管理，class属性编写伪类名  ================================-->
+        <!-- 验证码Action -->
+		<action name="checkCode" class="checkCodeAction"></action>
+		<!-- 登录模块 -->
+		<action name="login" class="loginAction">
+			<result name="admin_success" type="redirect">/admin/Home.jsp</result>
+			<result name="reception_success" type="redirect">/admin/ReceptionHome.jsp</result>   
+			<result name="user_success" type="redirect">/user/index.jsp</result>   
+			<result name="login">/login/Login.jsp</result>  
+		</action>
+		<!-- 注册模块 -->
+		<action name="register" class="registerAction">
+			<result name="success">/login/Login.jsp</result>
+			<result name="input">/login/Register.jsp</result>
+		</action>
+		
+<!-- ==================================== 后台管理模块  ========================================== -->
+ 		<!-- 管理 用户模块 --> 
+		<action name="aUser_*" class="adminUserAction" method="{1}">
+			<result name="allUser">/admin/UserList.jsp</result>
+			<result name="delete" type="redirectAction">/aUser_findAllUser</result>
+			<result name="deleteSelect" type="redirectAction">/aUser_findAllUser</result>
+			<result name="findUpdateUser" >/admin/UserUpdate.jsp</result>
+			<result name="updateSuccess" type="redirectAction">/aUser_findAllUser</result>
+			<result name="saveSuccess" type="redirectAction">/aUser_findAllUser</result>
+			<result name="failSave">/admin/UserAdd.jsp</result>
+		</action>
+		
+		<!-- 管理 前台模块 --> 
+		<action name="aReception_*" class="adminReceptionAction" method="{1}">
+			<result name="findAllReception">/admin/ReceptionList.jsp</result>
+			<result name="deleteReception" type="redirectAction">/aReception_findAllReception</result>
+			<result name="delSelectReception" type="redirectAction">/aReception_findAllReception</result>
+			<result name="findUpdateReception">/admin/ReceptionUpdate.jsp</result>
+			<result name="updateSuccess" type="redirectAction">/aReception_findAllReception</result>
+			<result name="toAlterReception">/admin/ReceptionPwd.jsp</result>
+			<result name="alterSuccess">/admin/ReceptionSuccess.jsp</result>
+ 			<result name="dataMap" type="json"></result>
+			<result name="saveSuccess" type="redirectAction">/aReception_findAllReception</result>
+			<result name="failSave">/admin/ReceptionAdd.jsp</result>
+		</action>
+		<!-- 管理  会员卡模块  --> 
+		<action name="aCard_*" class="adminCardAction" method="{1}">
+			<result name="toSaveCard">/admin/CardAdd.jsp</result>
+			<result name="saveCardSuccess" type="redirectAction">/aCard_findAllCard</result>
+			<result name="failSave" type="redirectAction">/aCard_toSaveCard</result>
+			<result name="allCard">/admin/CardList.jsp</result>
+			<result name="deleteCard" type="redirectAction">/aCard_findAllCard</result>
+			<result name="findUpdateCard">/admin/CardUpdate.jsp</result>
+			<result name="updateCard" type="redirectAction">/aCard_findAllCard</result>
+			<result name="delSelectCard" type="redirectAction">/aCard_findAllCard</result>
+		</action>
+		<!-- 管理 教练模块  -->
+		<action name="aCoach_*" class="adminCoachAction" method="{1}">
+			<result name="saveCoach" type="redirectAction">/aCoach_findAllCoach</result>
+			<result name="failSave">/admin/CoachAdd.jsp</result>
+			<result name="allCoach">/admin/CoachList.jsp</result>
+			<result name="deleteCoach" type="redirectAction">/aCoach_findAllCoach</result>
+			<result name="delSelectCoach" type="redirectAction">/aCoach_findAllCoach</result>
+			<result name="findUpdateCoach">/admin/CoachUpdate.jsp</result>
+			<result name="updateCoach" type="redirectAction">/aCoach_findAllCoach</result>
+		</action>
+		<!-- 管理 器材模块  -->
+		<action name="aEquip_*" class="adminEquipAction" method="{1}">
+			<result name="saveEquip" type="redirectAction">/aEquip_findAllEquip</result>
+			<result name="input">/admin/Error.jsp</result>
+			<result name="allEquip">/admin/EquipList.jsp</result>
+			<result name="deleteEquip" type="redirectAction">/aEquip_findAllEquip</result>
+			<result name="delSelectEquip" type="redirectAction">/aEquip_findAllEquip</result>
+			<result name="findUpdateEquip">/admin/EquipUpdate.jsp</result>
+			<result name="updateEquip" type="redirectAction">/aEquip_findAllEquip</result>
+		</action>
+		<!-- 管理 课程模块  -->
+		<action name="aCourse_*" class="adminCourseAction" method="{1}">
+			<result name="toSaveCourse">/admin/CourseAdd.jsp</result>
+			<result name="saveCourseSuccess" type="redirectAction">/aCourse_findAllCourse</result>
+			<result name="failSave" type="redirectAction">/aCourse_toSaveCourse</result>
+			<result name="allCourse">/admin/CourseList.jsp</result>
+			<result name="deleteCourse" type="redirectAction">/aCourse_findAllCourse</result>
+			<result name="delSelectCourse" type="redirectAction">/aCourse_findAllCourse</result>
+			<result name="findUpdateCourse">/admin/CourseUpdate.jsp</result>
+			<result name="updateCourse" type="redirectAction">/aCourse_findAllCourse</result>
+		</action>
+		
+		<!-- 管理 订单模块  -->
+		<action name="aOrders_*" class="adminOrdersAction" method="{1}">
+			<result name="toSaveOrders">/admin/OrdersAdd.jsp</result>
+			<result name="saveOrdersSuccess" type="redirectAction">/aOrders_findAllOrders</result>
+			<result name="allOrders">/admin/OrdersList.jsp</result>
+			<result name="deleteOrders" type="redirectAction">/aOrders_findAllOrders</result>
+			<result name="delSelectOrders" type="redirectAction">/aOrders_findAllOrders</result>
+			<result name="findUpdateOrders">/admin/OrdersUpdate.jsp</result>
+			<result name="updateOrders" type="redirectAction">/aOrders_findAllOrders</result>
+		</action>
+		
+		<!-- 管理 新闻模块  -->
+		<action name="aNews_*" class="adminNewsAction" method="{1}">
+			<result name="saveNews" type="redirectAction">/aNews_findAllNews</result>
+			<result name="findAllNews">/admin/NewsList.jsp</result>
+			<result name="deleteNews" type="redirectAction">/aNews_findAllNews</result>
+			<result name="delSelectNews" type="redirectAction">/aNews_findAllNews</result>
+			<result name="findUpdateNews">/admin/NewsUpdate.jsp</result>
+			<result name="updateNews" type="redirectAction">/aNews_findAllNews</result>
+		</action>
+		
+		<!--退出登录-->
+          <action name="exitAction"  class="exitAction">
+          <result name="success" type="redirect">index.jsp</result>
+          <result name="input">/admin/Home.jsp</result>
+           </action>
+		<!-- ==================================== 用户模块  ========================================== -->
+		
+		<!-- 用户模块  -->
+		<action name="updateUser" class="userAction">
+			<result name="updateSuccess">/user/index.jsp</result>
+		</action>
+		<!-- 教练模块  -->
+		<action name="uCoach_*" class="userCoachAction" method="{1}">
+			<result name="allCoach">/user/coachList.jsp</result>
+			<result name="indexCoach">/index/coach.jsp</result>
+		</action>
+		
+		<!-- 器材模块  -->
+		<action name="uEquip_*" class="userEquipAction" method="{1}">
+			<result name="allEquip">/user/equipList.jsp</result>
+			<result name="indexEquip">/index/equip.jsp</result>
+		</action>
+		
+		<!-- 课程模块  -->
+		<action name="uCourse_*" class="userCourseAction" method="{1}">
+			<result name="allCourse">/user/courseList.jsp</result>
+			<result name="prepareReserve" type="redirectAction">/uCourse_makeOrders</result>
+			<result name="reserveFail" type="redirectAction">/uCourse_findAllCourse</result>
+			<result name="reserveSuccess" type="redirectAction">/uCourse_findAllOrders</result>
+			<result name="allOrders">/user/ordersList.jsp</result>
+		</action>
+		
+		<!-- 订单模块  -->
+		<action name="uOrders_*" class="userOrdersAction" method="{1}">
+			<result name="allOrders">/user/ordersList.jsp</result>
+			<result name="deleteOrders" type="redirectAction">/uOrders_findAllOrders</result>
+<!-- 			<result name="finishPay" type="redirectAction">/uOrders_findAllOrders</result> -->
+			 <result name="finishPay" type="json"></result>
+<!-- 			<result name="failPay" type="redirectAction">/user/error.jsp</result> -->
+		</action>
+		
+		<!-- 新闻模块  -->
+		<action name="uNews_*" class="userNewsAction" method="{1}">
+			<result name="allNews">/user/newsList.jsp</result>
+			<result name="indexNews">/index/news.jsp</result>
+		</action>
+		<!-- 会员卡模块  -->
+		<action name="findAllCard" class="userCardAction">
+			<result name="allCard">/user/cardList.jsp</result>
+		</action>
+		
+     </package> 
+		
+		
+</struts>
